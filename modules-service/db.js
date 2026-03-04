@@ -11,6 +11,6 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => console.log('[DB] Conexión establecida con PostgreSQL'));
-pool.on('error',   (err) => console.error('[DB] Error de conexión:', err.message));
+pool.on('error',   (err) => console.error('[DB] Error:', err.message));
 
 module.exports = pool;

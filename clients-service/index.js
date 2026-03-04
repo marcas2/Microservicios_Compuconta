@@ -38,7 +38,6 @@ app.post('/api/clients', async (req, res) => {
     );
     res.status(201).json({ success: true, data: result.rows[0] });
   } catch (err) {
-    // Código 23505 = violación de UNIQUE en PostgreSQL
     if (err.code === '23505')
       return res.status(409).json({ success: false, message: 'El NIT o email ya está registrado' });
     res.status(500).json({ success: false, message: err.message });

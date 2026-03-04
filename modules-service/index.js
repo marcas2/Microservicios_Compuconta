@@ -4,7 +4,7 @@ const db = require('./db');
 const app = express();
 app.use(express.json());
 
-// GET catálogo de módulos
+// GET catálogo completo de módulos
 app.get('/api/modules', async (req, res) => {
   try {
     const result = await db.query('SELECT * FROM modules ORDER BY id');

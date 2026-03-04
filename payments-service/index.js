@@ -19,7 +19,7 @@ app.get('/api/payments/client/:clientId', async (req, res) => {
   }
 });
 
-// POST procesar pago
+// POST procesar pago de suscripción
 app.post('/api/payments', async (req, res) => {
   const { clientId, onboardingId, amount, method } = req.body;
 
@@ -28,7 +28,7 @@ app.post('/api/payments', async (req, res) => {
   if (!VALID_METHODS.includes(method))
     return res.status(400).json({ success: false, message: `Métodos válidos: ${VALID_METHODS.join(', ')}` });
 
-  // Simulación: 85% aprobación
+  // Simulación: 85% tasa de aprobación
   const approved      = Math.random() > 0.15;
   const status        = approved ? 'approved' : 'rejected';
   const transactionId = `CC-TXN-${Date.now()}`;
@@ -42,7 +42,7 @@ app.post('/api/payments', async (req, res) => {
     const payment = result.rows[0];
     res.status(approved ? 201 : 402).json({
       success: approved,
-      message: approved ? 'Pago aprobado' : 'Pago rechazado por la entidad financiera',
+      message: approved ? 'Pago aprobado. Suscripción activada.' : 'Pago rechazado. Verifique sus datos.',
       data: payment,
     });
   } catch (err) {

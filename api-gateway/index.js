@@ -12,7 +12,7 @@ const routes = [
 ];
 
 app.use((req, res, next) => {
-  console.log(`[Gateway] ${req.method} ${req.path}`);
+  console.log(`[Gateway] ${new Date().toISOString()} | ${req.method} ${req.path}`);
   next();
 });
 
@@ -20,6 +20,8 @@ routes.forEach(({ path, target }) => {
   app.use(path, createProxyMiddleware({ target, changeOrigin: true }));
 });
 
-app.get('/health', (req, res) => res.json({ service: 'API Gateway', status: 'running', port: 8080 }));
+app.get('/health', (req, res) => {
+  res.json({ service: 'API Gateway', status: 'running', port: 8080 });
+});
 
 app.listen(8080, () => console.log('✅ API Gateway → http://localhost:8080'));
