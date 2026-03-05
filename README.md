@@ -16,7 +16,7 @@
 
 ---
 
-## ▶️ Cómo ejecutar
+##  Cómo ejecutar
 
 ### Paso 1 — Crear la base de datos
 
@@ -72,17 +72,17 @@ cd notifications-service && node index.js
 Deberías ver esto en cada terminal:
 
 ```
-✅ API Gateway           → http://localhost:8080
-✅ Clients Service       → http://localhost:3001
-✅ Modules Service       → http://localhost:3002
-✅ Payments Service      → http://localhost:3003
-✅ Onboarding Service    → http://localhost:3004
-✅ Notifications Service → http://localhost:3005
+API Gateway           → http://localhost:8080
+Clients Service       → http://localhost:3001
+Modules Service       → http://localhost:3002
+Payments Service      → http://localhost:3003
+Onboarding Service    → http://localhost:3004
+Notifications Service → http://localhost:3005
 ```
 
 ---
 
-## 🧪 Paso 5 — Probar el flujo de onboarding
+##  Paso 5 — Probar el flujo de onboarding
 
 ### Opción A — Postman (recomendado en Windows)
 
@@ -141,7 +141,7 @@ curl http://localhost:3005/health
 
 ---
 
-## 🗃️ Paso 6 — Verificar datos en pgAdmin
+##  Paso 6 — Verificar datos en pgAdmin
 
 Después de realizar el POST, abre el Query Tool en pgAdmin y ejecuta:
 
@@ -156,7 +156,7 @@ Deberías ver los registros creados en tiempo real: el cliente registrado, el pa
 
 ---
 
-## 📐 Arquitectura
+##  Arquitectura
 
 ```
         Cliente (Postman / Browser)
