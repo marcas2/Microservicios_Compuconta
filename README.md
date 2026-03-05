@@ -39,43 +39,78 @@ DB_PASSWORD=tu_password_aqui
 Abre una terminal en la raíz del proyecto y ejecuta:
 
 ```cmd
-cd api-gateway           && npm install && cd ..
-cd clients-service       && npm install && cd ..
-cd modules-service       && npm install && cd ..
-cd payments-service      && npm install && cd ..
-cd onboarding-service    && npm install && cd ..
-cd notifications-service && npm install && cd ..
+cd api-gateway           && npm install
+cd clients-service       && npm install
+cd modules-service       && npm install
+cd payments-service      && npm install
+cd onboarding-service    && npm install
+cd notifications-service && npm install
 ```
 
 ### Paso 4 — Levantar los servicios (6 terminales separadas)
 
 ```cmd
-cd api-gateway           && node index.js
-cd clients-service       && node index.js
-cd modules-service       && node index.js
-cd payments-service      && node index.js
-cd onboarding-service    && node index.js
+:: Terminal 1
+cd api-gateway && node index.js
+
+:: Terminal 2
+cd clients-service && node index.js
+
+:: Terminal 3
+cd modules-service && node index.js
+
+:: Terminal 4
+cd payments-service && node index.js
+
+:: Terminal 5
+cd onboarding-service && node index.js
+
+:: Terminal 6
 cd notifications-service && node index.js
+```
+
+Deberías ver esto en cada terminal:
+
+```
+✅ API Gateway           → http://localhost:8080
+✅ Clients Service       → http://localhost:3001
+✅ Modules Service       → http://localhost:3002
+✅ Payments Service      → http://localhost:3003
+✅ Onboarding Service    → http://localhost:3004
+✅ Notifications Service → http://localhost:3005
 ```
 
 ---
 
-## 🧪 Ejemplos de uso
+## 🧪 Paso 5 — Probar el flujo de onboarding
 
-### Flujo completo de onboarding (request principal)
+### Opción A — Postman (recomendado en Windows)
 
-```bash
-curl -X POST http://localhost:8080/api/onboarding/start \
-  -H "Content-Type: application/json" \
-  -d '{
-    "clientData": {
-      "name": "Ferreteria El Progreso S.A.S",
-      "nit": "901234567-8",
-      "email": "contabilidad@elprogreso.com"
-    },
-    "moduleIds": [1, 2, 5],
-    "paymentMethod": "pse"
-  }'
+1. Abre Postman y crea una nueva petición con los siguientes parámetros:
+   - **Método:** `POST`
+   - **URL:** `http://localhost:8080/api/onboarding/start`
+   - **Body** → selecciona `raw` → formato `JSON`
+
+2. Pega el siguiente cuerpo en el Body:
+
+```json
+{
+  "clientData": {
+    "name": "Ferretería El Progreso S.A.S",
+    "nit": "901234567-8",
+    "email": "contabilidad@elprogreso.com"
+  },
+  "moduleIds": [1, 2, 5],
+  "paymentMethod": "pse"
+}
+```
+
+3. Haz clic en **Send**. Una respuesta exitosa tendrá `"success": true` y mostrará el detalle de cada paso ejecutado en el campo `steps`.
+
+### Opción B — CMD de Windows
+
+```cmd
+curl -X POST http://localhost:8080/api/onboarding/start -H "Content-Type: application/json" -d "{\"clientData\":{\"name\":\"Ferreteria El Progreso S.A.S\",\"nit\":\"901234567-8\",\"email\":\"contabilidad@elprogreso.com\"},\"moduleIds\":[1,2,5],\"paymentMethod\":\"pse\"}"
 ```
 
 ### Otros endpoints útiles
@@ -106,9 +141,9 @@ curl http://localhost:3005/health
 
 ---
 
-## 🗃️ Verificar datos en pgAdmin
+## 🗃️ Paso 6 — Verificar datos en pgAdmin
 
-Después de ejecutar el onboarding, abre el Query Tool en pgAdmin y ejecuta:
+Después de realizar el POST, abre el Query Tool en pgAdmin y ejecuta:
 
 ```sql
 SELECT * FROM clients;
@@ -116,6 +151,8 @@ SELECT * FROM payments;
 SELECT * FROM onboarding_sessions;
 SELECT * FROM notifications;
 ```
+
+Deberías ver los registros creados en tiempo real: el cliente registrado, el pago con estado `approved`, la sesión de onboarding con estado `completed` y la notificación de bienvenida enviada. Esto confirma que la base de datos PostgreSQL está funcionando correctamente con la arquitectura de microservicios.
 
 ---
 
